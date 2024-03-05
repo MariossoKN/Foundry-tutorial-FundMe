@@ -41,8 +41,6 @@ contract WithdrawFundMe is Script {
             "FundMe",
             block.chainid
         );
-        vm.startBroadcast();
         withdrawFundMe(mostRecentDeployment);
-        vm.stopBroadcast();
     }
 }
