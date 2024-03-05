@@ -6,9 +6,11 @@ import {FundMe} from "../../src/FundMe.sol";
 import {Test, console} from "../../lib/forge-std/src/Test.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
+import {HelperConfig} from "../../script/HelperConfig.s.sol";
 
 contract InteractionsTest is Test {
     FundMe fundMe;
+    HelperConfig helperConfig;
     uint256 constant NOT_ENOUGH_ETH_SENT = 1e12;
     uint256 constant ENOUGH_ETH_SENT = 5e18;
     uint256 constant STARTING_BALANCE = 20e18;
@@ -19,7 +21,7 @@ contract InteractionsTest is Test {
 
     function setUp() external {
         DeployFundMe deploy = new DeployFundMe();
-        fundMe = deploy.run();
+        (fundMe, helperConfig) = deploy.run();
         vm.deal(USER, STARTING_BALANCE);
         // vm.deal(USER2, STARTING_BALANCE);
     }

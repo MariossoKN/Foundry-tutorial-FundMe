@@ -7,13 +7,13 @@ import {Script} from "../lib/forge-std/src/Script.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
 
 contract DeployFundMe is Script {
-    function run() external returns (FundMe) {
+    function run() external returns (FundMe, HelperConfig) {
         HelperConfig helperConfig = new HelperConfig();
         address ethUsdPriceFeed = helperConfig.activeNetworkConfig();
 
         vm.startBroadcast();
         FundMe fundMe = new FundMe(ethUsdPriceFeed);
         vm.stopBroadcast();
-        return fundMe;
+        return (fundMe, helperConfig);
     }
 }
