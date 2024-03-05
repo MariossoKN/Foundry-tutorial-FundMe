@@ -6,6 +6,8 @@ import {FundMe} from "../../src/FundMe.sol";
 import {Test, console} from "../../lib/forge-std/src/Test.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
+// import {HelperConfig} from "../../script/HelperConfig.s.sol";
+
 contract FundMeTest is Test {
     FundMe fundMe;
     uint256 constant NOT_ENOUGH_ETH_SENT = 1e12;
@@ -14,6 +16,8 @@ contract FundMeTest is Test {
     address USER = makeAddr("user");
     address USER2 = makeAddr("user2");
     uint256 constant GAS_PRICE = 1;
+
+    // HelperConfig helperConfig;
 
     function setUp() external {
         // fundMe = new FundMe(priceFeed);
@@ -151,4 +155,19 @@ contract FundMeTest is Test {
             endingOwnerBalance
         );
     }
+
+    function testgetAddressToAmountFunded() public funded {
+        uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
+        assertEq(amountFunded, ENOUGH_ETH_SENT);
+    }
+
+    function testgetFunder() public funded {
+        assertEq(fundMe.getFunder(0), USER);
+    }
+
+    // function testgetPriceFeed() public {
+    //     address priceFeed = address(fundMe.getPriceFeed());
+    //     address activeNetworkConfig = helperConfig.activeNetworkConfig();
+    //     assertEq(priceFeed, activeNetworkConfig);
+    // }
 }
